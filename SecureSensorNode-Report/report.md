@@ -40,8 +40,46 @@ This project directly addresses key topics from the Software Engineering course,
 
 
 ## 3. Development Methodology
-- Chosen lifecycle model (e.g., Agile, Waterfall)
-- DevOps practices and tools overview
+
+### 3.1 Process Model
+
+The project follows an Agile-inspired iterative model, structured in two-week sprints.  
+Each sprint includes backlog refinement, sprint planning, implementation, testing,  
+and a sprint review. This approach ensures continuous feedback and incremental  
+delivery of working software.
+
+### 3.2 Version Control & Branching
+
+We use Git for distributed version control with the following conventions:  
+- **Main branch** (`main`): always in a deployable state.  
+- **Feature branches**: created per task (`feature/<description>`), merged via pull request  
+  after code review.  
+- **Commit messages**: formatted as `type(scope): short description`, e.g.,  
+  `feat(firmware): add UART encryption module`.
+
+### 3.3 Build Automation
+
+- **Firmware**: a `Makefile` in `Firmware/` defines targets:  
+  - `all`: compile the firmware  
+  - `clean`: remove build artifacts  
+  - `flash`: upload to STM32 via OpenOCD  
+- **Microservice**: shell scripts in `Automation/` set up a Python virtual  
+  environment (`venv`), install dependencies from `requirements.txt`, and run  
+  the service locally.
+
+### 3.4 Continuous Integration
+
+We simulate CI with GitHub Actions (or local Git hooks) defined in  
+`.github/workflows/ci.yml`:  
+1. **Checkout** code  
+2. **Install toolchain** (ARM GCC, dependencies)  
+3. **Build firmware** (`make all`)  
+4. **Run host-based unit tests** for C code (in `Test/Firmware/`)  
+5. **Setup Python venv** and install requirements  
+6. **Run Python unit tests** (in `Test/Microservice/`)  
+7. **Report** build and test status  
+
+This pipeline enforces early detection of errors and maintains code quality.
 
 ## 4. System Design
 - High-level architecture diagram
