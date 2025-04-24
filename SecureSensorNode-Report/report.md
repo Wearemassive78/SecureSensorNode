@@ -129,10 +129,30 @@ Integrity: SHA-256 generates a digest appended to the ciphertext
 
 
 ## 5. Implementation
+
 ### 5.1 Firmware
-- Folder structure (`Firmware/`)
-- Toolchain setup
-- Key modules (UART, AES/SHA-256)
+
+The firmware for the STM32F401RE is organized under `Firmware/` with the following structure:
+
+
+Key modules:
+
+- **main.c**:  
+  - System initialization (clocks, GPIO)  
+  - Infinite loop reading sensor and sending data  
+- **bsp.h / bsp.c**:  
+  - Abstraction of board-specific peripherals (LED, UART)  
+- **sensor.c / sensor.h**:  
+  - BMP280 initialization and read functions  
+- **security.c / security.h**:  
+  - AES-128 encryption and SHA-256 hashing routines  
+- **comm.c / comm.h**:  
+  - UART send/receive with basic buffer management  
+
+### 5.2 Microservice
+
+The Python microservice resides under `Microservice/`:
+
 
 ### 5.2 Microservice
 - Folder structure (`Microservice/`)
