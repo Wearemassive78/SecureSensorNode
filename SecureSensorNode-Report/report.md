@@ -7,8 +7,37 @@ This project directly addresses key topics from the Software Engineering course,
 
 
 ## 2. Requirements Analysis
-- Functional requirements
-- Non-functional requirements (security, modularity, scalability)
+
+### 2.1 Functional Requirements
+
+- **FR1**: The embedded node shall read temperature and pressure data from the  
+  BMP280 sensor at a configurable sampling rate.
+- **FR2**: The embedded node shall encrypt and hash the sensor data before  
+  transmission.
+- **FR3**: The microservice shall receive, decrypt, validate, and store sensor  
+  data in a local database.
+- **FR4**: The microservice shall expose a RESTful endpoint `/data` returning  
+  the latest reading as JSON.
+- **FR5**: The microservice shall expose a RESTful endpoint `/history` returning  
+  historical data for a specified time range.
+- **FR6**: The system shall allow runtime configuration of the sensor’s sampling  
+  rate via a dedicated API endpoint.
+
+### 2.2 Non-Functional Requirements
+
+- **NFR1 (Security)**: Ensure confidentiality and integrity using AES-128  
+  encryption and SHA-256 hashing on all data.
+- **NFR2 (Modularity)**: Maintain a clear separation of concerns between the  
+  embedded firmware (`Firmware/`) and the Python microservice (`Microservice/`).
+- **NFR3 (Scalability)**: Design the microservice to support horizontal scaling;  
+  it must be stateless and compatible with container orchestration.
+- **NFR4 (Performance)**: All firmware operations (read–encrypt–transmit) must  
+  complete within the configured sampling interval.
+- **NFR5 (Maintainability)**: Follow coding standards, include inline comments,  
+  and provide API documentation (Swagger/OpenAPI).
+- **NFR6 (Reliability)**: The system shall detect and recover from UART  
+  communication errors without data loss.
+
 
 ## 3. Development Methodology
 - Chosen lifecycle model (e.g., Agile, Waterfall)
