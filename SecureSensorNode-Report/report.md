@@ -82,9 +82,51 @@ We simulate CI with GitHub Actions (or local Git hooks) defined in
 This pipeline enforces early detection of errors and maintains code quality.
 
 ## 4. System Design
-- High-level architecture diagram
-- Component descriptions (Embedded node, Microservice)
-- Communication channel (UART insecure)
+
+### 4.1 Architecture Overview
+
+The system consists of two main components: the **Embedded Sensor Node** and the **Python Microservice**.  
+The Embedded Sensor Node runs on an STM32F401RE microcontroller, reads data from a BMP280 sensor, encrypts and hashes it, and transmits via UART.  
+The Python Microservice receives the data over a serial port, decrypts and validates it, stores it in a database, and exposes it through RESTful APIs.
+
+```mermaid
+graph TD
+  A[STM32F401RE Node] -->|UART (insecure)| B[Python Microservice]
+  B --> C[(Database)]
+  B --> D[REST API Clients]
+
+### 4.2 Component Descriptions
+
+Embedded Sensor Node
+
+Hardware: STM32F401RE Nucleo board, BMP280 sensor
+
+Firmware modules:
+
+sensor.c/sensor.h: interfaces with BMP280 via I²C
+
+security.c/security.h: AES-128 encryption & SHA-256 hashing
+
+comm.c/comm.h: UART transmission handler
+
+Python Microservice
+
+Serial Interface: uses PySerial to read encrypted data from UART
+
+Security Module: decrypts with AES-128, verifies integrity with SHA-256
+
+Data Storage: SQLite database for sensor readings
+
+API Layer: FastAPI (or Flask) defining endpoints /data and /history
+
+### 4.3 Communication Channel
+We treat UART as an insecure transport: no built-in encryption or checksum.
+Therefore all cryptographic protections are implemented at the application layer:
+
+Encryption: AES-128 in CBC mode secures the payload
+
+Integrity: SHA-256 generates a digest appended to the ciphertext
+
 
 ## 5. Implementation
 ### 5.1 Firmware
