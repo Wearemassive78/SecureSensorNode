@@ -1,8 +1,10 @@
 # Secure Sensor Node Project Report
 
 ## 1. Introduction
-- Project context and objectives
-- Course relevance (Software Engineering & Distributed Systems)
+The Secure Sensor Node project aims to design and implement a secure, modular embedded system that collects environmental data (temperature and pressure) via an STM32F401RE microcontroller and exposes it through a lightweight Python microservice. The system simulates a scenario in which the communication channel (UART) is insecure, forcing all data protection mechanisms to be implemented at the application layer using AES encryption and SHA-256 hashing.
+
+This project directly addresses key topics from the Software Engineering course, including requirements analysis, architectural design, implementation in C and Python, unit and integration testing, and DevOps practices such as version control (Git), build automation (Makefile and shell scripts), and continuous integration. Additionally, the project lays the groundwork for later exploration of distributed systems concepts—especially socket programming and RESTful API design—making it also relevant to the subsequent Distributed Systems exam.
+
 
 ## 2. Requirements Analysis
 - Functional requirements
