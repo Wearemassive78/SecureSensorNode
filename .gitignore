@@ -1,0 +1,11 @@
+**/*.o
+cat << 'EOF' > .gitignore
+**/*.elf
+cat << 'EOF' > .gitignore
+**/*.o
+cat << 'EOF' > .gitignore
+**/*.elf
+
+**/*.elf
+token
+exit
